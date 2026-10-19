@@ -19,7 +19,7 @@
         <div class="section-heading"><div><div class="eyebrow">PRIVATE OPERATIONS</div><h2>Quản lý bản phát hành</h2></div><button id="close-admin" class="button button-quiet">Đóng ×</button></div>
         <p>Token quản trị được xác thực tại backend. Cần cấu hình ADMIN_API_TOKEN và cơ sở dữ liệu bền vững trước khi dùng chức năng xuất bản.</p>
         <form id="admin-login-form" class="admin-login"><label for="admin-token">Admin API token</label><div class="login-row"><input id="admin-token" type="password" autocomplete="current-password" required placeholder="Nhập token quản trị"><button class="button button-primary" type="submit">Kết nối</button><button id="admin-logout" class="button button-quiet" type="button" hidden>Thoát</button></div></form>
-        <div id="admin-message" class="admin-message" role="status" aria-live="polite"></div>
+        <div id="admin-message" class="admin-message" role="status" aria-live="polite"></div><div id="admin-summary" class="admin-summary"></div>
         <div id="admin-workspace" hidden>
           <form id="release-form" class="release-form">
             <div class="form-heading"><div><div class="eyebrow">RELEASE BUILDER</div><h3>Tạo bản phát hành</h3></div><span class="section-note">Tải trực tiếp tối đa 25 MiB</span></div>
