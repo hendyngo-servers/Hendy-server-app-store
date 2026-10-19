@@ -1,0 +1,7 @@
+name = "hendy-server-app-store-api"
+main = "worker/index.ts"
+compatibility_date = "2026-10-20"
+workers_dev = true
+
+[vars]
+RELEASES_JSON = "[]"
