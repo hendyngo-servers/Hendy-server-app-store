@@ -2,7 +2,7 @@ databases:
   - name: hendy-store-db
     databaseName: hendy_store
     user: hendy_store
-    plan: basic-256mb
+    plan: 0.1c-256mb
     region: singapore
 
 services:
