@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: hendy-server-app-store
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: RELEASES_JSON
+        value: "[]"
