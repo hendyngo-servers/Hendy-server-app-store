@@ -99,7 +99,7 @@ function showAdminMessage(message: string, type: "error" | "success" | "info" = 
 function setAdminWorkspace(connected: boolean) {
   $("#admin-workspace").hidden = !connected;
   $("#admin-logout").hidden = !connected;
-  $("#admin-token").disabled = connected;
+  ($("#admin-token") as HTMLInputElement).disabled = connected;
   const connectButton = $("#admin-login-form button[type='submit']") as HTMLButtonElement;
   connectButton.hidden = connected;
 }
