@@ -1,3 +1,4 @@
+import "./style.css";
 type Platform = "windows" | "android" | "ios";
 type Release = { id?: string; name?: string; version: string; build?: number; platform: Platform; channel?: string; releaseDate?: string; fileSize?: number; downloadUrl?: string; sha256?: string; releaseNotes?: string; mandatory?: boolean };
 const apps: { id: Platform; name: string; subtitle: string; icon: string; detail: string }[] = [
