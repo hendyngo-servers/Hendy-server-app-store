@@ -1,0 +1,17 @@
+import express from "express";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const app = express();
+const root = path.dirname(fileURLToPath(import.meta.url));
+const port = Number(process.env.PORT || 10000);
+app.disable("x-powered-by");
+app.use(express.json({limit:"32kb"}));
+app.use((_req,res,next)=>{res.setHeader("X-Content-Type-Options","nosniff");res.setHeader("X-Frame-Options","DENY");res.setHeader("Referrer-Policy","strict-origin-when-cross-origin");res.setHeader("Permissions-Policy","camera=(), microphone=(), geolocation=()");next();});
+const releases = () => { try { return JSON.parse(process.env.RELEASES_JSON || "[]"); } catch { return []; } };
+app.get(["/api/health","/health"],(_req,res)=>res.json({status:"ok",service:"hendy-server-app-store",platform:"render",timestamp:new Date().toISOString()}));
+app.get("/api/releases",(_req,res)=>res.json({success:true,total:releases().length,releases:releases()}));
+app.get("/api/update-check",(req,res)=>{const platform=String(req.query.platform||"windows");const channel=String(req.query.channel||"stable");const version=String(req.query.clientVersion||"0.0.0");const list=releases().filter(r=>r.platform===platform&&(!channel||r.channel===channel)).sort((a,b)=>String(b.version).localeCompare(String(a.version),undefined,{numeric:true}));const latest=list[0];if(!latest)return res.json({updateAvailable:false,message:"Chưa có bản phát hành phù hợp."});res.json({updateAvailable:latest.version!==version,latestVersion:latest.version,platform:latest.platform,channel:latest.channel||"stable",downloadUrl:latest.downloadUrl||null,sha256:latest.sha256||null,releaseNotes:latest.releaseNotes||"",mandatory:Boolean(latest.mandatory)});});
+app.get("/api/telemetry",(_req,res)=>res.json({service:"hendy-server-app-store",runtime:"node",uptimeSeconds:Math.floor(process.uptime()),timestamp:new Date().toISOString()}));
+app.use(express.static(path.join(root,"dist"),{index:false,maxAge:"1h"}));
+app.get("*",(req,res,next)=>{if(req.path.startsWith("/api/"))return res.status(404).json({error:"API route not found"});res.sendFile(path.join(root,"dist","index.html"),err=>{if(err)next(err);});});
+app.listen(port,"0.0.0.0",()=>console.log(`Hendy Server App Store listening on ${port}`));
