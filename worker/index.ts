@@ -152,16 +152,31 @@ async function uploadFile(request: Request, env: Env) {
   if (!PLATFORMS.has(platform)) return json({ error: "Nền tảng không hợp lệ." }, 400);
   const declared = Number(request.headers.get("content-length") || 0);
   if (declared > UPLOAD_LIMIT) return json({ error: "Giới hạn upload trực tiếp là 25 MiB." }, 413);
-  const buffer = await request.arrayBuffer();
-  if (buffer.byteLength < 1) return json({ error: "Tệp rỗng." }, 400);
-  if (buffer.byteLength > UPLOAD_LIMIT) return json({ error: "Giới hạn upload trực tiếp là 25 MiB; với gói lớn, hãy tải lên R2 riêng và nhập URL HTTPS." }, 413);
+  if (!request.body) return json({ error: "Tệp rỗng." }, 400);
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let totalBytes = 0;
+  while (true) {
+    const item = await reader.read();
+    if (item.done) break;
+    totalBytes += item.value.byteLength;
+    if (totalBytes > UPLOAD_LIMIT) {
+      await reader.cancel();
+      return json({ error: "Giới hạn upload trực tiếp là 25 MiB; với gói lớn, hãy tải lên R2 riêng và nhập URL HTTPS." }, 413);
+    }
+    chunks.push(item.value);
+  }
+  if (totalBytes < 1) return json({ error: "Tệp rỗng." }, 400);
+  const buffer = new Uint8Array(totalBytes);
+  let offset = 0;
+  for (const chunk of chunks) { buffer.set(chunk, offset); offset += chunk.byteLength; }
   const digest = await crypto.subtle.digest("SHA-256", buffer);
   const sha256 = Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, "0")).join("");
   const key = `releases/${platform}/${new Date().toISOString().slice(0,10)}/${crypto.randomUUID()}-${filename}`;
-  await env.RELEASES_BUCKET.put(key, buffer, { httpMetadata: { contentType: "application/octet-stream", contentDisposition: `attachment; filename="${filename}"` }, customMetadata: { sha256, platform } });
+  await env.RELEASES_BUCKET.put(key, buffer.buffer, { httpMetadata: { contentType: "application/octet-stream", contentDisposition: `attachment; filename="${filename}"` }, customMetadata: { sha256, platform } });
   const downloadUrl = objectUrl(env, key);
   if (!downloadUrl) return json({ error: "R2 upload hoàn tất nhưng URL công khai chưa hợp lệ." }, 503);
-  return json({ success: true, key, filename, downloadUrl, fileSize: buffer.byteLength, sha256 }, 201);
+  return json({ success: true, key, filename, downloadUrl, fileSize: totalBytes, sha256 }, 201);
 }
 async function handleAdmin(request: Request, env: Env, url: URL): Promise<Response> {
   if (!env.ADMIN_API_TOKEN) return json({ error: "ADMIN_API_TOKEN chưa được cấu hình." }, 503);
