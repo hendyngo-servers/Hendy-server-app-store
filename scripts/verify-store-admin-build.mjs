@@ -81,6 +81,8 @@ assert.doesNotMatch(pagesGateway, /HendyToolsPro-3\.1\.2-Setup\.exe|airGapped: t
 assert.ok(pagesWrangler.includes("BACKEND_ORIGIN"), "Pages config must declare the backend origin");
 assert.ok(!viteConfig.includes("__dirname"), "Vite config must work with ESM-native loading");
 assert.ok(bootstrapWrangler.includes('directory = "./.worker-dist"'), "Bootstrap Worker must use prepared assets");
-assert.ok(wrangler.includes('required = ["RELEASE_PUBLISH_TOKEN", "CF_ACCESS_TEAM_DOMAIN", "CF_ACCESS_AUD", "CF_ACCESS_ADMIN_EMAILS"]'), "Production Worker config must declare every required runtime secret");
+assert.doesNotMatch(wrangler, /^\[secrets\]/m, "Worker secrets must be provisioned externally rather than committed or required in static Wrangler config");
+assert.ok(deployWorkflow.includes("--secrets-file"), "Deployment workflow must inject provisioned runtime secrets during the final Worker deploy");
+assert.ok(accessProvisioner.includes("CF_ACCESS_ADMIN_EMAILS"), "Provisioner must provide the Access email allow-list as a runtime secret");
 
-console.log("Verified: separate Storefront/Admin builds, runtime provisioning, required Access secrets, and Workers & Pages deployment hooks.");
+console.log("Verified: separate Storefront/Admin builds, runtime provisioning, externally provisioned Access secrets, and Workers & Pages deployment hooks.");
