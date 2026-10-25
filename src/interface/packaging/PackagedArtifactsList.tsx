@@ -19,6 +19,7 @@ export const PackagedArtifactsList: React.FC<PackagedArtifactsListProps> = ({
   artifacts,
   onOpenDriveModal,
   appName,
+  onPublishToStore,
 }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
