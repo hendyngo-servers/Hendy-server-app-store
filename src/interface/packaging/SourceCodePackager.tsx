@@ -158,7 +158,11 @@ export const SourceCodePackager: React.FC<SourceCodePackagerProps> = ({
       tagline: `Phần mềm ${config.appName} đóng gói hoàn chỉnh cho Windows 64-bit & 32-bit, Android, iOS`,
       description: `Ứng dụng ${config.appName} được biên dịch và đóng gói hoàn chỉnh từ mã nguồn. Tương thích Windows (x86_64 64-bit và x86 32-bit), Android (.apk) và iOS (.ipa), chứng thư số Authenticode EV.`,
       category: 'Ứng Dụng Đóng Gói Mới',
-      framework: config.selectedPlatforms.includes('windows') ? 'Rust + Native Windows' : 'Multiplatform Binary',
+      framework: config.selectedPlatforms.includes('windows')
+        ? 'Rust + Tauri'
+        : (config.selectedPlatforms.includes('android') || config.selectedPlatforms.includes('ios'))
+          ? 'Flutter'
+          : 'C++ / Wasm',
       currentVersion: `v${config.version}`,
       bundleIdentifier: config.packageId,
       publisher: config.publisher,
