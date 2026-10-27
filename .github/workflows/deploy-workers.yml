@@ -5,6 +5,7 @@ on:
     paths:
       - "workers/**"
       - "packages/types/**"
+      - "package.json"
       - "automation/auto-patcher-rules.json"
       - "migrations/**"
       - ".github/workflows/deploy-workers.yml"
