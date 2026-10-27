@@ -1,0 +1,1 @@
+{"name":"@hendy/shared-hooks","version":"1.0.0","private":true,"type":"module","exports":{".":"./src/index.ts","./useDeviceDetect":"./src/useDeviceDetect.ts","./useAuth":"./src/useAuth.ts","./useSyncLogs":"./src/useSyncLogs.ts"},"dependencies":{"@hendy/types":"workspace:*","react":"^19.1.1"},"scripts":{"build":"tsc --noEmit","typecheck":"tsc --noEmit","lint":"tsc --noEmit"}}

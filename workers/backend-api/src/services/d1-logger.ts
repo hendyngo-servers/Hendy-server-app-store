@@ -1,0 +1,3 @@
+export interface D1Env { DB: D1Database; }
+export async function writeLog(db:D1Database,level:"info"|"warning"|"error",action:string,message:string,actor="cloudflare-access"){await db.prepare("INSERT INTO logs (id, level, action, message, actor, created_at) VALUES (?, ?, ?, ?, ?, ?)").bind(crypto.randomUUID(),level,action,message.slice(0,500),actor,new Date().toISOString()).run();}
+export async function readLogs(db:D1Database,limit=50){const safe=Math.min(Math.max(limit,1),100);const result=await db.prepare("SELECT id, level, action, message, actor, created_at AS createdAt FROM logs ORDER BY created_at DESC LIMIT ?").bind(safe).all();return result.results;}

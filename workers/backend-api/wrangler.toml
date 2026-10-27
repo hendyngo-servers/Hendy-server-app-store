@@ -1,0 +1,27 @@
+name = "hendy-backend-api"
+main = "src/index.ts"
+compatibility_date = "2026-10-26"
+workers_dev = true
+
+[vars]
+GITHUB_OWNER = "hendyngo-servers"
+GITHUB_REPO = "HendyAppStore"
+CF_ACCESS_TEAM_DOMAIN = "YOUR-TEAM.cloudflareaccess.com"
+CF_ACCESS_AUD = "REPLACE_WITH_ACCESS_APPLICATION_AUD"
+ADMIN_EMAIL_ALLOWLIST = ""
+ALLOWED_ORIGINS = "https://hendy-appstore-user.pages.dev,https://hendy-appstore-admin.pages.dev"
+SIGNED_URL_TTL_SECONDS = "900"
+OTA_MANIFEST_BASE_URL = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hendy-appstore-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[[kv_namespaces]]
+binding = "LAYOUT_CACHE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[[r2_buckets]]
+binding = "RELEASES_BUCKET"
+bucket_name = "hendyappstore-releases"

@@ -1,0 +1,13 @@
+name = "hendy-self-healing-bot"
+main = "src/index.ts"
+compatibility_date = "2026-10-26"
+workers_dev = true
+
+[vars]
+GITHUB_OWNER = "hendyngo-servers"
+GITHUB_REPO = "HendyAppStore"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hendy-appstore-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"

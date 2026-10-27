@@ -1,0 +1,2 @@
+import type { ReactNode } from "react";
+export function MobileAppStoreLayout({children}:{children:ReactNode}){return <div className="app-shell mobile-layout"><header className="topbar"><a className="brand" href="/"><span className="brand-mark">H</span><span>Hendy<span className="brand-muted">Store</span></span></a><span className="topbar-label">MOBILE STORE</span></header><main className="page-content">{children}</main></div>}

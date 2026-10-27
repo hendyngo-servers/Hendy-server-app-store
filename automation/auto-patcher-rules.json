@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "description": "Explicitly allowlisted recovery actions. This bot never edits source code automatically.",
+  "rules": [
+    { "workflow": "Matrix Build", "conclusion": "failure", "action": "rerun_once", "maxRetries": 1 },
+    { "workflow": "Deploy Cloudflare Workers", "conclusion": "failure", "action": "notify_only", "maxRetries": 0 },
+    { "workflow": "Secrets Schema Integrity", "conclusion": "failure", "action": "notify_only", "maxRetries": 0 }
+  ]
+}

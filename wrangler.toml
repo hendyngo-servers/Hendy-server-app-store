@@ -1,23 +1,6 @@
-# Canonical production Worker configuration for the GitHub Actions workflow and direct Workers Builds.
-# Secrets are provisioned separately; Worker authorization fails closed until Access secrets exist.
-# Keep the Worker name exactly "hendy-tool-releas" to retain its workers.dev URL.
-name = "hendy-tool-releas"
-main = "./src/worker.ts"
-compatibility_date = "2026-10-23"
-workers_dev = true
-
-[assets]
-directory = "./.worker-dist"
-binding = "ASSETS"
-not_found_handling = "single-page-application"
-run_worker_first = ["/", "/api/*", "/health", "/healthz", "/admin*", "/studio*"]
-
-[vars]
-ENVIRONMENT = "production"
-APP_NAME = "Hendy Store — App Store & Software Releases"
-PUBLIC_BASE_URL = "https://hendy-tool-releas.ngogiaidy56.workers.dev"
-
-[[r2_buckets]]
-binding = "RELEASES_BUCKET"
-bucket_name = "hendy-tool-releases"
-
+# Reference only. Deploy each microservice using its own configuration:
+# workers/edge-router/wrangler.toml
+# workers/backend-api/wrangler.toml
+# workers/ota-manifest-server/wrangler.toml
+# workers/self-healing-bot/wrangler.toml
+# Resource IDs must be generated in your Cloudflare account and then copied into the individual worker config files.

@@ -1,0 +1,1 @@
+{"name":"@hendy/config","version":"1.0.0","private":true,"type":"module","scripts":{"build":"echo config-only","typecheck":"echo config-only","lint":"echo config-only"}}

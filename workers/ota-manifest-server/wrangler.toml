@@ -1,0 +1,17 @@
+name = "hendy-ota-manifest-server"
+main = "src/index.ts"
+compatibility_date = "2026-10-26"
+workers_dev = true
+
+[vars]
+SIGNED_URL_TTL_SECONDS = "900"
+BACKEND_API_BASE_URL = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hendy-appstore-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "RELEASES_BUCKET"
+bucket_name = "hendyappstore-releases"

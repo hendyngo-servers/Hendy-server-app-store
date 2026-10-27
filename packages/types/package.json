@@ -1,0 +1,5 @@
+{
+  "name": "@hendy/types", "version": "1.0.0", "private": true, "type": "module",
+  "exports": {".": "./src/index.ts", "./secrets": "./src/secrets.ts", "./app-release": "./src/app-release.ts", "./device": "./src/device.ts"},
+  "scripts": {"build": "tsc --noEmit", "typecheck": "tsc --noEmit", "lint": "tsc --noEmit"}
+}

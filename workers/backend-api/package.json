@@ -1,0 +1,21 @@
+{
+  "name": "@hendy/backend-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@hendy/types": "workspace:*",
+    "libsodium-wrappers": "^0.8.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20261020.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.45.0"
+  }
+}

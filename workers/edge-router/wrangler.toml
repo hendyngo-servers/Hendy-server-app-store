@@ -1,0 +1,12 @@
+name = "hendy-edge-router"
+main = "src/index.ts"
+compatibility_date = "2026-10-26"
+workers_dev = true
+
+[vars]
+USER_STORE_URL = ""
+ADMIN_STUDIO_URL = ""
+
+[[kv_namespaces]]
+binding = "LAYOUT_CACHE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

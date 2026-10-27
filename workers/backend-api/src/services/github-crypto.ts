@@ -1,0 +1,2 @@
+import sodium from "libsodium-wrappers";
+export async function encryptForGitHub(plaintext:string,publicKeyBase64:string):Promise<string>{await sodium.ready;const publicKey=sodium.from_base64(publicKeyBase64,sodium.base64_variants.ORIGINAL);const message=sodium.from_string(plaintext);const cipher=sodium.crypto_box_seal(message,publicKey);return sodium.to_base64(cipher,sodium.base64_variants.ORIGINAL);}

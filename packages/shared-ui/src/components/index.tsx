@@ -1,0 +1,5 @@
+import type { ReactNode, ButtonHTMLAttributes } from "react";
+export function StatusBadge({ status, children }: { status: "success" | "warning" | "error" | "neutral"; children: ReactNode }) { return <span className={`badge badge-${status}`}><i />{children}</span>; }
+export function Panel({ title, subtitle, children, action }: { title: string; subtitle?: string; children: ReactNode; action?: ReactNode }) { return <section className="panel"><header className="panel-heading"><div><h2>{title}</h2>{subtitle && <p>{subtitle}</p>}</div>{action}</header>{children}</section>; }
+export function EmptyState({ title, description }: { title: string; description: string }) { return <div className="empty-state"><span className="empty-mark">↗</span><h3>{title}</h3><p>{description}</p></div>; }
+export function Button({ children, variant = "primary", ...props }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "secondary" | "danger" }) { return <button className={`button button-${variant}`} {...props}>{children}</button>; }

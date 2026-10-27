@@ -1,0 +1,2 @@
+import type { AppRelease } from "@hendy/types"; import { DownloadButton } from "./DownloadButton";
+export function MacOSInstaller({apiBaseUrl,release}:{apiBaseUrl:string;release:AppRelease}){return <div><DownloadButton apiBaseUrl={apiBaseUrl} release={release} label={release.format==="pkg"?"Tải gói PKG":"Tải DMG macOS"}/><small className="trust-note">Chứng chỉ Developer ID và notarization cần được xác minh độc lập.</small></div>}

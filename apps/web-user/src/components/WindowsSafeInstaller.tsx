@@ -1,0 +1,2 @@
+import type { AppRelease } from "@hendy/types"; import { DownloadButton } from "./DownloadButton";
+export function WindowsSafeInstaller({apiBaseUrl,release}:{apiBaseUrl:string;release:AppRelease}){return <div><DownloadButton apiBaseUrl={apiBaseUrl} release={release} label={release.format==="msix"?"Tải MSIX":"Tải bộ cài Windows"}/><small className="trust-note">Chỉ tải bản phát hành từ nguồn bạn tin cậy; chữ ký số cần được Windows xác minh.</small></div>}

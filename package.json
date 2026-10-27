@@ -1,45 +1,33 @@
 {
-  "name": "hendy-store-release-platform",
+  "name": "hendy-app-store",
   "private": true,
-  "version": "4.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0",
-    "clean": "node scripts/clean.mjs",
-    "lint": "tsc --noEmit",
-    "test": "tsx --test src/utils/*.test.ts",
-    "check:deployment": "node scripts/validate-deployment-contract.mjs",
-    "deploy:worker": "npm run check:deployment && npm run lint && npm test && npm run build && node scripts/prepare-worker-assets.mjs && npx --yes wrangler@4 deploy --config=wrangler.toml",
-    "deploy:pages": "npm run check:deployment && npm run lint && npm test && npm run build && node scripts/verify-store-admin-build.mjs && npx --yes wrangler@4 pages functions build functions --outfile=dist/_worker.js --output-routes-path=dist/_routes.json && node scripts/prepare-pages-output.mjs && npx --yes wrangler@4 pages deploy dist --config=wrangler.pages.toml --project-name=hendy-tool-releas --branch=main --no-bundle",
-    "package:web-release": "node scripts/package-web-release.mjs",
-    "provision:cloudflare:resources": "node scripts/provision-cloudflare-resources.mjs",
-    "provision:cloudflare:access": "node scripts/provision-cloudflare-access.mjs",
-    "smoke:cloudflare": "node scripts/smoke-test-cloudflare.mjs"
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.20.0",
+  "engines": {
+    "node": ">=22"
   },
-  "dependencies": {
-    "@google/genai": "^2.4.0",
-    "@tailwindcss/vite": "^4.3.3",
-    "@vitejs/plugin-react": "^6.1.1",
-    "dotenv": "^17.2.3",
-    "firebase": "^13.1.0",
-    "jszip": "^3.10.2",
-    "lucide-react": "^0.546.0",
-    "motion": "^12.23.24",
-    "react": "^19.0.1",
-    "react-dom": "^19.0.1",
-    "vite": "^8.3.0"
+  "scripts": {
+    "dev:user": "pnpm --filter @hendy/web-user dev",
+    "dev:admin": "pnpm --filter @hendy/web-admin dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "cf:deploy:edge": "wrangler deploy --config workers/edge-router/wrangler.toml",
+    "cf:deploy:api": "wrangler deploy --config workers/backend-api/wrangler.toml",
+    "cf:deploy:ota": "wrangler deploy --config workers/ota-manifest-server/wrangler.toml",
+    "cf:deploy:healing": "wrangler deploy --config workers/self-healing-bot/wrangler.toml",
+    "cf:deploy:workers": "pnpm cf:deploy:edge && pnpm cf:deploy:api && pnpm cf:deploy:ota && pnpm cf:deploy:healing",
+    "db:migrate:local": "wrangler d1 migrations apply hendy-appstore-db --local --config workers/backend-api/wrangler.toml",
+    "db:migrate:remote": "wrangler d1 migrations apply hendy-appstore-db --remote --config workers/backend-api/wrangler.toml",
+    "test": "vitest run --passWithNoTests",
+    "backup:d1": "node automation/db-backup.js"
   },
   "devDependencies": {
-    "@types/jszip": "^3.4.1",
-    "@types/node": "^22.14.0",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "autoprefixer": "^10.4.21",
-    "esbuild": "^0.28.0",
-    "tailwindcss": "^4.3.3",
-    "tsx": "^4.21.0",
-    "typescript": "^7.0.2"
+    "@cloudflare/workers-types": "^4.20261020.0",
+    "@types/node": "^22.19.0",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "wrangler": "^4.45.0"
   }
 }
