@@ -23,7 +23,7 @@
     "backup:d1": "node automation/db-backup.js"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20261020.0",
+    "@cloudflare/workers-types": "5.20261027.1",
     "@types/node": "^22.19.0",
     "turbo": "^2.5.8",
     "typescript": "^5.9.3",
